@@ -13,47 +13,47 @@
   
    <div id="controlPanel" style="display: block;">		
     <div>Rotate</div>
-    <input type="range" id="rotate_ent" min="-40" max="40" step="0.005" value="0.5">
+    <input type="range" id="rotate_ent" min="-90" max="90" step="0.005" value="0.5">
     </div>
   <script>
     var viewer = new Cesium.Viewer('cesiumContainer');
 
-var rotation ;
-var lastRotation;
-var lastPoints;
+    var rotation ;
+    var lastRotation;
+    var lastPoints;
 
-function getRotationValue() {
-  rotation =  document.getElementById("rotate_ent").value;
-  rotation = parseFloat(rotation);
-  if (rotation === lastRotation) {
-    return lastPoints;
-  }
-  
-  lastRotation = rotation;
-  var poly = turf.polygon([[ [-75.9607370, 37.1804856], [-75.9578855, 37.1861531], [-75.9542902, 37.1852787], [-75.9546776, 37.1816414], [-75.9578841, 37.1823743], [-75.9584821, 37.1800066], [-75.9607370, 37.1804856] ]]);
-  var rotatedPoly = turf.transformRotate(poly, rotation);
-                           
-  var pointsArray = [];
-  console.log(poly);
-  
-  lastPoints = Cesium.Cartesian3.fromDegreesArray();
-  return lastPoints;
-}
+    function getRotationValue() {
+      rotation =  document.getElementById("rotate_ent").value;
+      rotation = parseFloat(rotation);
+      if (rotation === lastRotation) {
+        return lastPoints;
+      }
 
+      lastRotation = rotation;
+      var poly = turf.polygon([[ [-75.9607370, 37.1804856], [-75.9578855, 37.1861531], [-75.9542902, 37.1852787], [-75.9546776, 37.1816414], [-75.9578841, 37.1823743], [-75.9584821, 37.1800066], [-75.9607370, 37.1804856] ]]);
+      var rotatedPoly = turf.transformRotate(poly, rotation);
 
-viewer.entities.add({
-    polygon: {
-        hierarchy : new Cesium.CallbackProperty(getRotationValue, false),
-        //hierarchy : Cesium.Cartesian3.fromDegreesArray([ -75.9607370, 37.1804856,-75.9578855, 37.1861531,-75.9542902, 37.1852787,-75.9546776, 37.1816414,-75.9578841, 37.1823743,-75.9584821, 37.1800066]),
-        material : Cesium.Color.BLUE.withAlpha(0.5),
-		extrudedHeight : 300.0,
-        classificationType : Cesium.ClassificationType.TERRAIN
+      var pointsArray = [];
+      for(let point of rotatedPoly.geometry.coordinates[0]) {
+        pointsArray.push(point[0]);
+        pointsArray.push(point[1]);
+      }
+
+      lastPoints = Cesium.Cartesian3.fromDegreesArray(pointsArray);
+      return lastPoints;
     }
-});
 
 
+    viewer.entities.add({
+        polygon: {
+            hierarchy : new Cesium.CallbackProperty(getRotationValue, false),
+            material : Cesium.Color.BLUE.withAlpha(0.5),
+        extrudedHeight : 300.0,
+            classificationType : Cesium.ClassificationType.TERRAIN
+        }
+    });
 
-viewer.zoomTo(viewer.entities);
+    viewer.zoomTo(viewer.entities);
   </script>
 </body>
 </html>
