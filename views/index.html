@@ -2,17 +2,58 @@
 <html lang="en">
 <head>
   <script src="https://cesiumjs.org/releases/1.52/Build/Cesium/Cesium.js"></script>
+  <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
   <link href="https://cesiumjs.org/releases/1.52/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 </head>
 <body>
-  <div id="cesiumContainer" style="width: 700px; height:400px"></div>
+  <div id="cesiumContainer" style="width: 100%; height: 100%;"></div>
+  <style>
+        #controlPanel {position: absolute; top: 15px; left: 15px; background:#fff; padding: 5px 8px; border-radius: 5px;    }
+       </style>
+  
+   <div id="controlPanel" style="display: block;">		
+    <div>Rotate</div>
+    <input type="range" id="rotate_ent" min="-40" max="40" step="0.005" value="0.5">
+    </div>
   <script>
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWE5ODhhZS1lMzQ4LTRiMjctYjNmYS01YmNkMWM5NTRkZjIiLCJpZCI6MTYyMywiaWF0IjoxNTI5MzM2MjQyfQ.bX1IVi_OeHl7rW9i010nxrcE8M6CJabOvuGWbPOZw24';
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-        terrainProvider: Cesium.createWorldTerrain()
-    });
+    var viewer = new Cesium.Viewer('cesiumContainer');
 
-    
+var rotation ;
+var lastRotation;
+var lastPoints;
+
+function getRotationValue() {
+  rotation =  document.getElementById("rotate_ent").value;
+  rotation = parseFloat(rotation);
+  if (rotation === lastRotation) {
+    return lastPoints;
+  }
+  
+  lastRotation = rotation;
+  var poly = turf.polygon([[ [-75.9607370, 37.1804856], [-75.9578855, 37.1861531], [-75.9542902, 37.1852787], [-75.9546776, 37.1816414], [-75.9578841, 37.1823743], [-75.9584821, 37.1800066], [-75.9607370, 37.1804856] ]]);
+  var rotatedPoly = turf.transformRotate(poly, rotation);
+                           
+  var pointsArray = [];
+  console.log(poly);
+  
+  lastPoints = Cesium.Cartesian3.fromDegreesArray();
+  return lastPoints;
+}
+
+
+viewer.entities.add({
+    polygon: {
+        hierarchy : new Cesium.CallbackProperty(getRotationValue, false),
+        //hierarchy : Cesium.Cartesian3.fromDegreesArray([ -75.9607370, 37.1804856,-75.9578855, 37.1861531,-75.9542902, 37.1852787,-75.9546776, 37.1816414,-75.9578841, 37.1823743,-75.9584821, 37.1800066]),
+        material : Cesium.Color.BLUE.withAlpha(0.5),
+		extrudedHeight : 300.0,
+        classificationType : Cesium.ClassificationType.TERRAIN
+    }
+});
+
+
+
+viewer.zoomTo(viewer.entities);
   </script>
 </body>
 </html>
