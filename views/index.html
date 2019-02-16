@@ -37,7 +37,7 @@
         var sunPosition = Cesium.Simon1994PlanetaryPositions.computeSunPositionInEarthInertialFrame();
         var sunDirection = Cesium.Cartesian3.subtract(sunPosition, camera.position, new Cesium.Cartesian3());
         window.sunDirection = sunDirection;
-        camera.direction = Cesium.Cartesian3.clone(sunDirection);
+        //camera.direction = Cesium.Cartesian3.clone(sunDirection);
       });
     }
   </script>
