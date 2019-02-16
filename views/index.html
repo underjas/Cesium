@@ -35,9 +35,9 @@
         // Look at the sun 
         var camera = viewer.camera;
         var sunPosition = Cesium.Simon1994PlanetaryPositions.computeSunPositionInEarthInertialFrame();
-        var sunDirection = Cesium.Cartesian3.subtract(camera.position, sunPosition, new Cesium.Cartesian3());
+        var sunDirection = Cesium.Cartesian3.subtract(sunPosition, camera.position, new Cesium.Cartesian3());
         window.sunDirection = sunDirection;
-        //camera.direction = sunDirection;
+        camera.direction = Cesium.Cartesian3.clone(sunDirection);
       });
     }
   </script>
