@@ -22,6 +22,7 @@
     var viewer = new Cesium.Viewer('cesiumContainer', {
       terrainProvider: Cesium.createWorldTerrain()
     });
+    window.viewer = viewer;
     
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position){
@@ -29,7 +30,10 @@
         var long = position.coords.longitude;
         viewer.camera.setView({
           destination : Cesium.Cartesian3.fromDegrees(long, lat, 100.0)
-      });
+        });
+        // Look at the sun 
+        var sunPosition = Cesium.Simon1994PlanetaryPositions.computeSunPositionInEarthInertialFrame();
+        viewer.camera.lookAt(sunPosition);
       });
     }
   </script>
