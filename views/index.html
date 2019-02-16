@@ -18,8 +18,20 @@
   </style>
   <div id="cesiumContainer"></div>
   <script>
-    var viewer = new Cesium.Viewer('cesiumContainer');
+    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWE5ODhhZS1lMzQ4LTRiMjctYjNmYS01YmNkMWM5NTRkZjIiLCJpZCI6MTYyMywiaWF0IjoxNTI5MzM2MjQyfQ.bX1IVi_OeHl7rW9i010nxrcE8M6CJabOvuGWbPOZw24';
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+      terrainProvider: Cesium.createWorldTerrain()
+    });
     
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position){
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        viewer.camera.setView({
+          destination : Cesium.Cartesian3.fromDegrees(long, lat, 100.0)
+      });
+      });
+    }
   </script>
 </body>
 </html>
