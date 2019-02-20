@@ -18,28 +18,9 @@
   </style>
   <div id="cesiumContainer"></div>
   <script>
-    Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxYWE5ODhhZS1lMzQ4LTRiMjctYjNmYS01YmNkMWM5NTRkZjIiLCJpZCI6MTYyMywiaWF0IjoxNTI5MzM2MjQyfQ.bX1IVi_OeHl7rW9i010nxrcE8M6CJabOvuGWbPOZw24';
     var viewer = new Cesium.Viewer('cesiumContainer', {
       terrainProvider: Cesium.createWorldTerrain()
     });
-    // Make it accessible in console for live coding!
-    window.viewer = viewer;
-    
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(function(position){
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        viewer.camera.setView({
-          destination : Cesium.Cartesian3.fromDegrees(long, lat, 300.0)
-        });
-        // Look at the sun 
-        var camera = viewer.camera;
-        var sunPosition = Cesium.Simon1994PlanetaryPositions.computeSunPositionInEarthInertialFrame();
-        var sunDirection = Cesium.Cartesian3.subtract(sunPosition, camera.position, new Cesium.Cartesian3());
-        window.sunDirection = sunDirection;
-        //camera.direction = Cesium.Cartesian3.clone(sunDirection);
-      });
-    }
   </script>
 </body>
 </html>
