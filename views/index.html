@@ -6,11 +6,11 @@
 </head>
 <body>
   <style>
-  html, body {
-    overflow: hidden;
-    margin:0px;
-    padding:0px;
-    height:100%
+    html, body {
+      overflow: hidden;
+      margin:0px;
+      padding:0px;
+      height:100%
     }
     #cesiumContainer {
       height:100%
@@ -18,9 +18,7 @@
   </style>
   <div id="cesiumContainer"></div>
   <script>
-    var viewer = new Cesium.Viewer('cesiumContainer', {
-      terrainProvider: Cesium.createWorldTerrain()
-    });
+    var viewer = new Cesium.Viewer('cesiumContainer');
   </script>
 </body>
 </html>
