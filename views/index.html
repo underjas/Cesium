@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://cesiumjs.org/releases/1.57/Build/Cesium/Cesium.js"></script>
-  <link href="https://cesiumjs.org/releases/1.57/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <script src="https://cesiumjs.org/releases/1.59/Build/Cesium/Cesium.js"></script>
+  <link href="https://cesiumjs.org/releases/1.59/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
 </head>
 <body>
   <style>
@@ -26,7 +26,11 @@
   <div id="cesiumContainer"></div>
   <a href="https://glitch.com/edit/#!/cesium-template" id="remix"><img src="https://cdn.glitch.com/2703baf2-b643-4da7-ab91-7ee2a2d00b5b%2Fremix-button.svg" alt="Remix on Glitch" /></a>
   <script>
-    var viewer = new Cesium.Viewer('cesiumContainer');
+    var viewer = new Cesium.Viewer('cesiumContainer', {
+      imageryProvider : Cesium.createTileMapServiceImageryProvider({
+        url : Cesium.buildModuleUrl('Assets/Textures/NaturalEarthII')
+      }),
+    });
   </script>
 </body>
 </html>
