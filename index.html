@@ -1,26 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">2
+<html lang="en">
 <head>
   <script src="https://cesiumjs.org/releases/1.72/Build/Cesium/Cesium.js"></script>
   <link href="https://cesiumjs.org/releases/1.72/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
+  <link href="style.css" rel="stylesheet">
 </head>
 <body>
-  <style>
-    html, body {
-      overflow: hidden;
-      margin:0px;
-      padding:0px;
-      height:100%
-    }
-    #cesiumContainer {
-      height:100%
-    }
-  </style>
   <div id="cesiumContainer"></div>
   <script>
     // Get your token from https://cesium.com/ion/tokens
     Cesium.Ion.defaultAccessToken = 'YOUR_TOKEN_HERE';
-    var viewer = new Cesium.Viewer('cesiumContainer');
+    const viewer = new Cesium.Viewer('cesiumContainer');
   </script>
 </body>
 </html>
