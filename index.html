@@ -99,6 +99,15 @@ layers.add(cesiumLogo);
       
       viewer.trackedEntity = airplaneEntity;
     }
+viewer.camera.flyTo({
+  destination: Cesium.Cartesian3.fromDegrees(-122.39053, 37.61429, 350), // Adjust this value
+  duration: 2, // Adjust duration for a slower zoom
+  orientation:{
+    heading: Cesium.Math.toRadians(0.0), //direction the camera is facing, 0 is north
+    pitch: Cesium.Math.toRadians(-45.0), //tilt downward -90 is straight down
+    roll: 0.0 //no roll)
+  }
+});
 
     loadModel();
   </script>
